@@ -1,3 +1,4 @@
+import e from "express";
 import {
   getEmployeeByNik,
   updateEmployeeName,
@@ -13,9 +14,12 @@ const getEmployeeInfo = (req, res) => {
 const updateEmployeeData = (req, res) => {
   const nik = req.params.nik;
   const body = req.body;
-  const status = updateEmployeeName(nik, body.nama);
-
-  return res.json(status);
+  const result = updateEmployeeName(nik, body.nama);
+  if (result.status === "false") {
+    return res.status(200).json(result);
+  } else if (result.status === "true") {
+    return res.status(201).json(result);
+  }
 };
 
 export { getEmployeeInfo, updateEmployeeData };
